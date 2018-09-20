@@ -16,7 +16,7 @@ on the SpRL 2013 IAPR TC-12 dataset.
 ## Usage
 
 1. Clone this repository where you want to use it. 
-2. Download the two models from the Releases page
+2. Download the two models from the [releases](https://github.com/mmxgn/sprl-spacy/releases) page
 3. Import `spacy` and `sprl` and use them like the following example:
 
 
