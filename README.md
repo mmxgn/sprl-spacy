@@ -6,7 +6,6 @@ on the SpRL 2013 IAPR TC-12 dataset.
 
 ## Requirements
 
-- [git lfs](https://git-lfs.github.com/) for cloning the large files in this repository
 - `spacy >=2.0.0a18` and the necessary requirements
 - `sklearn`
 - `scipy`
