@@ -37,7 +37,11 @@ If everything went fine you should get something like:
 ```
 
 If you happen to have problog installed, you can see `example.pl` on how to use it from
-within problog.
+within problog. **Note:** If you want to use it from within problog you need to append the `sprl` directory to `PYTHONPATH`, e.g:
+
+```
+$ PYTHONPATH=sprl problog example.pl
+```
 
 ## Credits
 
