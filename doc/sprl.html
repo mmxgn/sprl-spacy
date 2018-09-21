@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-07-22 Κυρ 16:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spatial Role Labelling Annotation Scheme</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Emmanouil Theofanis Chourdakis" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Spatial Role Labelling Annotation Scheme</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org153fc58">1. Introduction</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org3ffa814">1.0.1. Definitions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf14e8e0">2. Annotation approach</a>
+<ul>
+<li><a href="#org9c3aa4d">2.1. Reference Resolution</a></li>
+<li><a href="#org4e203d4">2.2. Landmarks and Paths</a></li>
+<li><a href="#org1ce1bd4">2.3. Spatial Indicators</a></li>
+<li><a href="#org0092f76">2.4. Motion indicators</a></li>
+</ul>
+</li>
+<li><a href="#org7cbc506">3. Examples</a>
+<ul>
+<li><a href="#orgac54522">3.1. Simple Descriptions</a></li>
+<li><a href="#orgcf87128">3.2. Complex Descriptions</a>
+<ul>
+<li><a href="#org03578c1">3.2.1. Complex locative statements</a></li>
+<li><a href="#org01ed080">3.2.2. Path and route descriptions</a></li>
+<li><a href="#org0d1a39b">3.2.3. Sequential scene descriptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0c8be3c">4. RCC8^+ Relations</a></li>
+<li><a href="#org920bb92">5. References</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org153fc58" class="outline-2">
+<h2 id="org153fc58"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This is an effort to port the spatial role labeling annotation scheme found in <a class='org-ref-reference' href="#kordjamshidi2017spatial">kordjamshidi2017spatial</a> to prolog. 
+</p>
+</div>
+
+
+<div id="outline-container-org3ffa814" class="outline-4">
+<h4 id="org3ffa814"><span class="section-number-4">1.0.1</span> Definitions</h4>
+<div class="outline-text-4" id="text-1-0-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>Relational representations of the SpRL annotation scheme</label><pre class="src src-prolog">
+<span style="color: #84ffff;">trajector</span>(<span style="color: #ffcc80;">Id</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Trajector with id Id</span>
+<span style="color: #84ffff;">landmark</span>(<span style="color: #ffcc80;">Id</span>).  <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Landmark with id Id</span>
+<span style="color: #84ffff;">spatial_indicator</span>(<span style="color: #ffcc80;">Id</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Spatial indicator</span>
+<span style="color: #84ffff;">motion_indicator</span>(<span style="color: #ffcc80;">Id</span>).  <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Motion indicator</span>
+
+<span style="color: #84ffff;">extent</span>(<span style="color: #ffcc80;">Id</span>, <span style="color: #ffcc80;">Extent</span>-<span style="color: #ffcc80;">Begin</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Text extent Extent that begins at token Begin is assigned to entity Id</span>
+<span style="color: #84ffff;">path</span>(<span style="color: #ffcc80;">Id</span>, <span style="color: #ffcc80;">Path</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Path Path is assigned to entity with id Id</span>
+
+<span style="color: #84ffff;">spatial_relation</span>(<span style="color: #ffcc80;">SpId</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Spatial relation id </span>
+<span style="color: #84ffff;">trajector</span>(<span style="color: #ffcc80;">SpId</span>, <span style="color: #ffcc80;">TrId</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Trajector entity TrId is assigned to spatial relation SpId</span>
+<span style="color: #84ffff;">landmark</span>(<span style="color: #ffcc80;">SpId</span>, <span style="color: #ffcc80;">LmId</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Same for landmark</span>
+<span style="color: #84ffff;">spatial_indicator</span>(<span style="color: #ffcc80;">SpId</span>, <span style="color: #ffcc80;">SiId</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Same for spatial indicator</span>
+<span style="color: #84ffff;">motion_indicator</span>(<span style="color: #ffcc80;">SpId</span>, <span style="color: #ffcc80;">MId</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Same for motion indicator</span>
+
+<span style="color: #84ffff;">srtype</span>(<span style="color: #ffcc80;">StId</span>).
+<span style="color: #84ffff;">srtype</span>(<span style="color: #ffcc80;">SpId</span>, <span style="color: #ffcc80;">StId</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Assigns a different group of parameters to spatial relation =SpId=.</span>
+<span style="color: #84ffff;">gtype</span>(<span style="color: #ffcc80;">StId</span>, <span style="color: #ffcc80;">Type</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">General type  assigned, can be one of {region, direction, distance}.</span>
+<span style="color: #84ffff;">stype</span>(<span style="color: #ffcc80;">StId</span>, <span style="color: #ffcc80;">Type</span>). <span style="color: #b0bec5;">% </span><span style="color: #b0bec5;">Specific type assigned. </span>
+
+<span style="color: #84ffff;">value</span>(<span style="color: #ffcc80;">StId</span>, <span style="color: #ffcc80;">Value</span>),
+
+<span style="color: #84ffff;">frame_of_reference</span>(<span style="color: #ffcc80;">SpId</span>, <span style="color: #ffcc80;">Type</span>).
+
+</pre>
+</div>
+
+<p>
+The mentioned entity predicates are:
+</p>
+<ul class="org-ul">
+<li><code>trajector(Id)</code>: Specifies a trajector with id Id.</li>
+<li><code>landmark(Id)</code>: Specifies a landmark with id Id.</li>
+<li><code>spatial_indicator(Id)</code>: Specifies a spatial indicator with id Id.</li>
+<li><code>motion_indicator(id)</code>: Specifies a motion indicator with id Id.</li>
+<li><code>extent(Id, Extent-Begin)</code>: Assigns the token sequence Extent that starts at token Begin to the entity with id <code>id</code>.</li>
+<li><code>path(Id, Path)</code>: Assigns a path part to a landmark, assigns the landmark to a park. <code>Path</code> can be one of:
+<ul class="org-ul">
+<li><code>begin</code>: The beginning of the path.</li>
+<li><code>middle</code>: The middle of the path.</li>
+<li><code>end</code>: The endpoint of the path.</li>
+</ul></li>
+<li><code>spatial_relation(Id)</code>: Specifies a spatial relation with id <code>Id</code>.</li>
+</ul>
+
+<p>
+The spatial relation definitions and attributes are:
+</p>
+<ul class="org-ul">
+<li><code>spatial_relation(SpId)</code>: Specifies a spatial relation with id <code>SpId</code>.</li>
+<li><code>trajector(SpId, TrId)</code>: Assigns trajector with id <code>TrId</code> to spatial relation with id <code>SpId</code>.</li>
+<li><code>landmark(SpId, LmId)</code>: Assigns trajector with id <code>LmId</code> to spatial relation with id <code>SpId</code>.</li>
+<li><code>spatial_indicator(SpId, SiId)</code>: Assigns spatial indicator with id <code>SiId</code> to spatial relation with id <code>SpId</code>.</li>
+<li><code>motion_indicator(SpId, MId)</code>: Assigns a motion indicator with id <code>MId</code> to spatial relation with id <code>SpId</code>.</li>
+<li><code>srtype(SpId, StId)</code>: Assign a group of types (like <code>gtype</code>, <code>stype</code> and <code>value</code> to spatial relation id <code>SpId</code>.</li>
+<li><code>gtype(SpId, Type)</code>: Assigns a general type <code>Type</code> to spatial relation type group with id <code>SpId</code>. <code>Type</code> can be one of:
+<ul class="org-ul">
+<li><code>region</code></li>
+<li><code>direction</code></li>
+<li><code>distance</code></li>
+</ul></li>
+<li><code>stype(SpId, Type)</code>: Assigns a specific type <code>Type</code> to spatial relation (or type group) with id <code>SpId</code>. If <code>gtype(SpId, region)</code> is true then <code>Type</code></li>
+</ul>
+<p>
+must be <code>rcc8</code> and <code>value</code> one of spatial formalisms like RCC8+ (Table <a href="#orgfb94dcf">1</a>). If <code>gtype(SpId, direction)</code> then <code>Type</code> is one of:
+  <code>absolute</code>
+  <code>relative</code>
+otherwise if <code>gtype(SpId, distance)</code>, <code>Type</code> must be one of:
+  <code>quantitative</code>
+  <code>qualitative</code>
+</p>
+<ul class="org-ul">
+<li><code>frame_of_reference(SpId, Type)</code>: Spatial relation with id <code>SpId</code> is assigned a frame of reference type <code>Type</code> with <code>Type</code> being one of:
+-<code>intrinsic</code>
+-<code>relative</code>
+-<code>absolute</code></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf14e8e0" class="outline-2">
+<h2 id="orgf14e8e0"><span class="section-number-2">2</span> Annotation approach</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+A number of questions to ask for annotating in order to reduce ambiguity is seen below:
+</p>
+
+<ol class="org-ol">
+<li>Is there any direct (without commonsense implications) spatial description in the sentence?</li>
+<li>Which words are the indicators (trigger or signal) of the spatial information?</li>
+<li>Which words are the arguments of those spatial indicators?
+<ul class="org-ul">
+<li>See the following detailed questions</li>
+</ul></li>
+<li>Which tokens have the role of trajector for the spatial indicator and <i>what</i> is the spatial entity described (e.g. object, person)?</li>
+<li>Which tokens have the role of landmark for the spatial indicator?
+<ul class="org-ul">
+<li>How is the trajector location described and is there any landmark?</li>
+</ul></li>
+<li>Link the above three spatial concepts</li>
+<li>If the trajector/landmark are conjuctive phrases:
+<ol class="org-ol">
+<li>Annotate all the components separately</li>
+<li>Generate all possible spatial relations</li>
+</ol></li>
+<li>If you cannot complete the spatial relation (implicit roles exist in the sentence), annotate the missing roles as null/undefined role.
+<ul class="org-ul">
+<li>Finding the spatial indicator is <b>always</b> required.</li>
+</ul></li>
+<li>Is there a complex landmark?
+<ul class="org-ul">
+<li>If so, describe it in terms of a point in a path.</li>
+<li><code>beginning</code>, <code>middle</code>, <code>end</code>.</li>
+</ul></li>
+<li>Is there any motion with spatial effects?
+<ul class="org-ul">
+<li>If so, figure out the <i>tokens that trigger it</i> and the <i>motion indicator</i></li>
+</ul></li>
+<li>What is the frame of reference?
+<ul class="org-ul">
+<li>Maximum one frame for each location</li>
+</ul></li>
+<li>Given a predefined set of formal spatial relations, imagine the trajector and landmark as two regions:
+<ul class="org-ul">
+<li>Which formal relation describes the spatial semantics the best?</li>
+</ul></li>
+<li>Does the  spatial relation imply directional semantics?</li>
+<li>Does the spatial relation imply regional semantics?</li>
+<li>Does the spatial relation provide any information about the distance?</li>
+<li>Is one formal semantic type enough for a rough visualization/schematization of the meaning of the spatial relation and locating the objects in the space?</li>
+<li>Do we need multiple annotations to capture the semantics of the relation and to be able to draw a rough sketch? Annotate with as many as possible semantics that are covered by the relation.</li>
+<li>When annotating multiple semantics, choose <b>only one</b> fine-grained type for each general category of {<code>direction</code>, <code>region</code>, <code>distance</code>}.</li>
+</ol>
+
+<p>
+Answers to questions 12-18 require the selection of a formal spatial representation which can involve multiple
+choices. 
+</p>
+
+
+<p>
+To aid dealing with ambiguities, the spatial descriptions are categorized into <i>simple</i> and <i>complex</i> descriptions:
+</p>
+<ul class="org-ul">
+<li><i>simple descriptions</i> are spatial descriptions which include one target, at most one landmark and at most one spatial indicator.</li>
+<li><i>complex locative statements</i> are locative phrases with more than one landmark.</li>
+<li><i>path and route descriptions</i> There is focus shift, for example the speaker explains some target referring to some landmarks but at another point explains another object or landmark e.g. when the focus shifts to another entity as trajector.</li>
+<li><i>sequential scene descriptions</i> Those are linked descriptive phrases. After each description usually an object focus shift happens.</li>
+</ul>
+</div>
+
+
+<div id="outline-container-org9c3aa4d" class="outline-3">
+<h3 id="org9c3aa4d"><span class="section-number-3">2.1</span> Reference Resolution</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+In the case there are references instead of real trajectors or landmarks the resolution of references should be done as a post- or pre- processings step. For example, <i>there</i> in the following
+example is still a valid landmark. 
+</p>
+
+<p class="verse">
+The baloon went over [there]<sub>lm</sub><br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4e203d4" class="outline-3">
+<h3 id="org4e203d4"><span class="section-number-3">2.2</span> Landmarks and Paths</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+In the case we need to annotate landmarks, there are cases where we are describing a motion. In that case the landmark must indicate which part of the path it refers to.
+For example:
+</p>
+
+<p class="verse">
+John went out of [the room]<sub>lm</sub><br />
+</p>
+
+<p>
+In this case, we should annotate [the room]<sub>lm</sub> as:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">landmark</span>(lm1).
+<span style="color: #84ffff;">extent</span>(lm1, <span style="color: #9ccc65;">"the room"</span>-8).
+<span style="color: #84ffff;">path</span>(lm1, beginning).
+</pre>
+</div>
+
+<p>
+Notice the <code>beginning</code> path. This indicates that John was initially in the room.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1ce1bd4" class="outline-3">
+<h3 id="org1ce1bd4"><span class="section-number-3">2.3</span> Spatial Indicators</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Spatial indicators are mostly <i>prepositions</i> but can also be <i>verbs</i>, <i>nouns</i> and <i>adverbs</i> as well as <i>a combination of them</i>. For example the spatial indicator in:
+</p>
+
+
+<p class="verse">
+He is [in front of]<sub>s1</sub> the bush<br />
+</p>
+
+<p>
+will be annotated as:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">spatial_indicator</span>(s1).
+<span style="color: #84ffff;">extent</span>(s1, <span style="color: #9ccc65;">"in front of"</span>-3).
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0092f76" class="outline-3">
+<h3 id="org0092f76"><span class="section-number-3">2.4</span> Motion indicators</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Motion indicators are mostly <i>propositional verbs</i> but can also be <i>adverbs</i>, etc. An example tagging would be:
+</p>
+
+<p class="verse">
+The bird [flew to]<sub>m1</sub> its nest.<br />
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">motion_indicator</span>(m1).
+<span style="color: #84ffff;">extent</span>(m1, <span style="color: #9ccc65;">"flew to"</span>-3).
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org7cbc506" class="outline-2">
+<h2 id="org7cbc506"><span class="section-number-2">3</span> Examples</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgac54522" class="outline-3">
+<h3 id="orgac54522"><span class="section-number-3">3.1</span> Simple Descriptions</h3>
+<div class="outline-text-3" id="text-3-1">
+<p class="verse">
+She is at school.<br />
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">trajector</span>(tr1).
+<span style="color: #84ffff;">extent</span>(tr1, <span style="color: #9ccc65;">"She"</span>-1).
+<span style="color: #84ffff;">landmark</span>(lm1).
+<span style="color: #84ffff;">extent</span>(lm1, school-4).
+<span style="color: #84ffff;">spatial_indicator</span>(s1).
+<span style="color: #84ffff;">extent</span>(s1, at-3).
+<span style="color: #84ffff;">spatial_relation</span>(sr1).
+<span style="color: #84ffff;">trajector</span>(sr1, tr1).
+<span style="color: #84ffff;">landmark</span>(sr1, lm1).
+<span style="color: #84ffff;">spatial_indicator</span>(sr1, s1).
+<span style="color: #84ffff;">gtype</span>(sr1, region).
+<span style="color: #84ffff;">stype</span>(sr1, rcc8).
+<span style="color: #84ffff;">value</span>(sr1, tpp).
+<span style="color: #84ffff;">frame_of_reference</span>(sr1, intrinsic).
+</pre>
+</div>
+
+
+<p class="verse">
+She went to school.<br />
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">trajector</span>(tr1).
+<span style="color: #84ffff;">extent</span>(tr1, <span style="color: #9ccc65;">"She"</span>-1).
+<span style="color: #84ffff;">landmark</span>(lm1).
+<span style="color: #84ffff;">path</span>(lm1, end).
+<span style="color: #84ffff;">extent</span>(lm1, school-4).
+<span style="color: #84ffff;">spatial_indicator</span>(s1).
+<span style="color: #84ffff;">extent</span>(s1, to-3).
+<span style="color: #84ffff;">motion_indicator</span>(m1).
+<span style="color: #84ffff;">extent</span>(m1, <span style="color: #9ccc65;">"went to"</span>-2).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr1).
+<span style="color: #84ffff;">trajector</span>(sr1, tr1).
+<span style="color: #84ffff;">landmark</span>(sr1, lm1).
+<span style="color: #84ffff;">spatial_indicator</span>(sr1, s1).
+<span style="color: #84ffff;">motion_indicator</span>(sr1, m1).
+<span style="color: #84ffff;">gtype</span>(sr1, region).
+<span style="color: #84ffff;">stype</span>(sr1, rcc8).
+<span style="color: #84ffff;">value</span>(sr1, tpp).
+<span style="color: #84ffff;">frame_of_reference</span>(sr1, intrinsic).
+</pre>
+</div>
+
+
+
+<p class="verse">
+The book is on the table.<br />
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">trajector</span>(tr1).
+<span style="color: #84ffff;">extent</span>(tr1, <span style="color: #9ccc65;">"The book"</span>-1).
+
+<span style="color: #84ffff;">landmark</span>(lm1).
+<span style="color: #84ffff;">extent</span>(lm1, <span style="color: #9ccc65;">"the table"</span>-5).
+
+<span style="color: #84ffff;">spatial_indicator</span>(s1).
+<span style="color: #84ffff;">extent</span>(s1, on-4).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr1).
+<span style="color: #84ffff;">trajector</span>(sr1, tr1).
+<span style="color: #84ffff;">landmark</span>(sr1, lm1).
+<span style="color: #84ffff;">spatial_indicator</span>(sr1, s1).
+
+<span style="color: #84ffff;">gtype</span>(sr1, region).
+<span style="color: #84ffff;">stype</span>(sr1, rcc8).
+<span style="color: #84ffff;">value</span>(sr1, on).
+<span style="color: #84ffff;">frame_of_reference</span>(sr1, intrinsic).
+</pre>
+</div>
+
+
+<p class="verse">
+She is playing in the room.<br />
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">trajector</span>(tr1).
+<span style="color: #84ffff;">extent</span>(tr1, <span style="color: #9ccc65;">"She"</span>-1).
+
+<span style="color: #84ffff;">landmark</span>(lm1).
+<span style="color: #84ffff;">extent</span>(lm1, <span style="color: #9ccc65;">"the room"</span>-5).
+
+<span style="color: #84ffff;">spatial_indicator</span>(s1).
+<span style="color: #84ffff;">extent</span>(s1, on-4).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr1).
+<span style="color: #84ffff;">trajector</span>(sr1, tr1).
+<span style="color: #84ffff;">landmark</span>(sr1, lm1).
+<span style="color: #84ffff;">spatial_indicator</span>(sr1, s1).
+
+<span style="color: #84ffff;">gtype</span>(sr1, region).
+<span style="color: #84ffff;">stype</span>(sr1, rcc8).
+<span style="color: #84ffff;">value</span>(sr1, on).
+<span style="color: #84ffff;">frame_of_reference</span>(sr1, intrinsic).
+</pre>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-orgcf87128" class="outline-3">
+<h3 id="orgcf87128"><span class="section-number-3">3.2</span> Complex Descriptions</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-org03578c1" class="outline-4">
+<h4 id="org03578c1"><span class="section-number-4">3.2.1</span> Complex locative statements</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p class="verse">
+The vase is in the living room, on the table under the window.<br />
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">trajector</span>(tr1).
+<span style="color: #84ffff;">extent</span>(tr1, <span style="color: #9ccc65;">"The vase"</span>-1).
+<span style="color: #84ffff;">landmark</span>(lm1).
+<span style="color: #84ffff;">extent</span>(lm1, <span style="color: #9ccc65;">"the living room"</span>).
+<span style="color: #84ffff;">landmark</span>(lm2).
+<span style="color: #84ffff;">extent</span>(lm2, <span style="color: #9ccc65;">"the table"</span>).
+<span style="color: #84ffff;">landmark</span>(lm3).
+<span style="color: #84ffff;">extent</span>(lm3, <span style="color: #9ccc65;">"the window"</span>).
+<span style="color: #84ffff;">spatial_indicator</span>(s1).
+<span style="color: #84ffff;">extent</span>(s1, in-4).
+<span style="color: #84ffff;">spatial_indicator</span>(s2).
+<span style="color: #84ffff;">extent</span>(s2, on).
+<span style="color: #84ffff;">spatial_indicator</span>(s3).
+<span style="color: #84ffff;">extent</span>(s3, under).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr1).
+<span style="color: #84ffff;">trajector</span>(sr1, tr1).
+<span style="color: #84ffff;">landmark</span>(sr1, lm1).
+<span style="color: #84ffff;">spatial_indicator</span>(sr1, s1).
+<span style="color: #84ffff;">gtype</span>(sr1, region).
+<span style="color: #84ffff;">stype</span>(sr1, rcc8).
+<span style="color: #84ffff;">value</span>(sr1, ntpp).
+<span style="color: #84ffff;">frame_of_reference</span>(sr1, intrinsic).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr2).
+<span style="color: #84ffff;">trajector</span>(sr1, tr1).
+<span style="color: #84ffff;">landmark</span>(sr1, lm2).
+<span style="color: #84ffff;">spatial_indicator</span>(sr1, s2).
+<span style="color: #84ffff;">gtype</span>(sr1, region).
+<span style="color: #84ffff;">stype</span>(sr1, rcc8).
+<span style="color: #84ffff;">value</span>(sr1, ec).
+<span style="color: #84ffff;">frame_of_reference</span>(sr1, intrinsic).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr3).
+<span style="color: #84ffff;">trajector</span>(sr3, tr1).
+<span style="color: #84ffff;">landmark</span>(sr3, lm3).
+<span style="color: #84ffff;">spatial_indicator</span>(sr3, s3).
+<span style="color: #84ffff;">gtype</span>(sr1, direction).
+<span style="color: #84ffff;">stype</span>(sr1, relative).
+<span style="color: #84ffff;">value</span>(sr1, below).
+<span style="color: #84ffff;">frame_of_reference</span>(intrinsic).
+
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org01ed080" class="outline-4">
+<h4 id="org01ed080"><span class="section-number-4">3.2.2</span> Path and route descriptions</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p class="verse">
+The man came from between the shops, ran along the road and disappeared down the alley by the church.<br />
+</p>
+
+<p>
+Here the motion indicators are omitted. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-prolog">
+<span style="color: #84ffff;">trajector</span>(tr1).
+<span style="color: #84ffff;">extent</span>(tr1, <span style="color: #9ccc65;">"the man"</span>).
+
+<span style="color: #84ffff;">landmark</span>(lm1).
+<span style="color: #84ffff;">extent</span>(lm1, <span style="color: #9ccc65;">"the shops"</span>).
+<span style="color: #84ffff;">path</span>(lm1, beginning).
+
+<span style="color: #84ffff;">landmark</span>(lm2).
+<span style="color: #84ffff;">extent</span>(lm2, <span style="color: #9ccc65;">"the alley"</span>).
+<span style="color: #84ffff;">path</span>(lm2, end).
+
+<span style="color: #84ffff;">trajector</span>(tr2).
+<span style="color: #84ffff;">extent</span>(tr2, <span style="color: #9ccc65;">"the alley"</span>).
+
+<span style="color: #84ffff;">landmark</span>(lm3).
+<span style="color: #84ffff;">extent</span>(lm3, <span style="color: #9ccc65;">"the church"</span>).
+
+<span style="color: #84ffff;">spatial_indicator</span>(s1).
+<span style="color: #84ffff;">extent</span>(s1, <span style="color: #9ccc65;">"between"</span>).
+
+<span style="color: #84ffff;">spatial_indicator</span>(s2).
+<span style="color: #84ffff;">extent</span>(s2, <span style="color: #9ccc65;">"along"</span>).
+
+<span style="color: #84ffff;">spatial_indicator</span>(s3).
+<span style="color: #84ffff;">extent</span>(s3, <span style="color: #9ccc65;">"down"</span>).
+
+<span style="color: #84ffff;">spatial_indicator</span>(s4).
+<span style="color: #84ffff;">extent</span>(s4, <span style="color: #9ccc65;">"by"</span>).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr1).
+<span style="color: #84ffff;">trajector</span>(sr1, tr1).
+<span style="color: #84ffff;">landmark</span>(sr1, lm1).
+
+
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0d1a39b" class="outline-4">
+<h4 id="org0d1a39b"><span class="section-number-4">3.2.3</span> Sequential scene descriptions</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p class="verse">
+Behind the shops is a church, to the left of the church is the town hall, in front of the town hall is a fountain.<br />
+</p>
+
+<p>
+Here the motion indicators are omitted. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #84ffff;">trajector</span>(tr1).
+<span style="color: #84ffff;">extent</span>(tr1, church).
+<span style="color: #84ffff;">landmark</span>(lm1).
+<span style="color: #84ffff;">extent</span>(lm1, shops).
+<span style="color: #84ffff;">spatial_indicator</span>(s1).
+<span style="color: #84ffff;">extent</span>(s1, behind).
+<span style="color: #84ffff;">trajector</span>(tr2).
+<span style="color: #84ffff;">extent</span>(tr2, <span style="color: #9ccc65;">"town hall"</span>).
+<span style="color: #84ffff;">landmark</span>(lm2).
+<span style="color: #84ffff;">extent</span>(lm2, church).
+<span style="color: #84ffff;">spatial_indicator</span>(s2).
+<span style="color: #84ffff;">extent</span>(s2, <span style="color: #9ccc65;">"to the left of"</span>).
+<span style="color: #84ffff;">trajector</span>(tr3).
+<span style="color: #84ffff;">extent</span>(tr3, fountain).
+<span style="color: #84ffff;">landmark</span>(lm3).
+<span style="color: #84ffff;">extent</span>(lm3, <span style="color: #9ccc65;">"town hall"</span>).
+<span style="color: #84ffff;">spatial_indicator</span>(s3).
+<span style="color: #84ffff;">extent</span>(s3, <span style="color: #9ccc65;">"in front of"</span>).
+<span style="color: #84ffff;">spatial_relation</span>(sr1).
+<span style="color: #84ffff;">trajector</span>(sr1, tr1).
+<span style="color: #84ffff;">landmark</span>(sr1, lm1).
+
+<span style="color: #84ffff;">spatial_indicator</span>(sr1, s1).
+<span style="color: #84ffff;">frame_of_reference</span>(sr1, intrinsic).
+<span style="color: #84ffff;">gtype</span>(sr1, direction).
+<span style="color: #84ffff;">stype</span>(sr1, relative).
+<span style="color: #84ffff;">value</span>(sr1, behind).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr2).
+<span style="color: #84ffff;">trajector</span>(sr2, tr2).
+<span style="color: #84ffff;">landmark</span>(sr2, lm2).
+<span style="color: #84ffff;">spatial_indicator</span>(sr2, s2).
+<span style="color: #84ffff;">frame_of_reference</span>(sr2, intrinsic).
+<span style="color: #84ffff;">gtype</span>(sr2, direction).
+<span style="color: #84ffff;">stype</span>(sr2, relative).
+<span style="color: #84ffff;">value</span>(sr2, left).
+
+<span style="color: #84ffff;">spatial_relation</span>(sr3).
+<span style="color: #84ffff;">trajector</span>(sr3, tr3).
+<span style="color: #84ffff;">landmark</span>(sr3, lm3).
+<span style="color: #84ffff;">spatial_indicator</span>(sr3, s3).
+<span style="color: #84ffff;">frame_of_reference</span>(sr3, relative).
+<span style="color: #84ffff;">gtype</span>(sr3, direction).
+<span style="color: #84ffff;">stype</span>(sr3, relative).
+<span style="color: #84ffff;">value</span>(sr3, front).
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0c8be3c" class="outline-2">
+<h2 id="org0c8be3c"><span class="section-number-2">4</span> RCC8^+ Relations</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+An important reference is the RCC8^+ relations which are used throughout several ISO-space predicates and can be seen in Table <a href="#orgfb94dcf">1</a> and a visual explanation in Figure <a href="#org680aa0a">1</a>. The value <code>in</code> should be used when its not clear whether <code>tpp</code> or <code>ntpp</code> is the correct type.
+</p>
+
+<table id="orgfb94dcf" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> The RCC8 relations</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Relation</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>dc</code></td>
+<td class="org-left">Disconnected</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ec</code></td>
+<td class="org-left">External connection</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>po</code></td>
+<td class="org-left">Partial overlap</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>eq</code></td>
+<td class="org-left">Equal</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tpp</code></td>
+<td class="org-left">Tangential proper part</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>itpp</code></td>
+<td class="org-left">Inverse of tpp</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ntpp</code></td>
+<td class="org-left">Non-tangential proper part</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>intpp</code></td>
+<td class="org-left">nverse of ntpp</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>in</code></td>
+<td class="org-left">The disjunction of tpp and ntpp</td>
+</tr>
+</tbody>
+</table>
+
+
+<div id="org680aa0a" class="figure">
+<p><img src="./RCC8.jpg" alt="RCC8.jpg" />
+</p>
+<p><span class="figure-number">Figure 1: </span>An interpretation of RCC8^+ relations</p>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+<div id="outline-container-org920bb92" class="outline-2">
+<h2 id="org920bb92"><span class="section-number-2">5</span> References</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<h1 class='org-ref-bib-h1'>Bibliography</h1>
+<ul class='org-ref-bib'><li><a id="kordjamshidi2017spatial">[kordjamshidi2017spatial]</a> <a name="kordjamshidi2017spatial"></a>@incollectionkordjamshidi2017spatial,
+  title=Spatial role labeling annotation scheme,
+  author=Kordjamshidi, Parisa and van Otterlo, Martijn and Moens, Marie-Francine,
+  booktitle=Handbook of Linguistic Annotation,
+  pages=1025-1052,
+  year=2017,
+  publisher=Springer
+</li>
+</ul>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Emmanouil Theofanis Chourdakis</p>
+<p class="date">Created: 2018-07-22 Κυρ 16:51</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

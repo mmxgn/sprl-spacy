@@ -1,0 +1,528 @@
+#+TITLE: Spatial Role Labelling Annotation Scheme
+#+AUTHOR: Emmanouil Theofanis Chourdakis
+#+EMAIL: e.t.chourdakis@qmul.ac.uk
+#+LaTeX_HEADER: \usepackage{listings}
+#+LaTeX_HEADER: \usepackage{fullpage}
+
+* Introduction
+
+This is an effort to port the spatial role labeling annotation scheme found in cite:kordjamshidi2017spatial to prolog. 
+
+
+*** Definitions
+
+#+CAPTION: Relational representations of the SpRL annotation scheme
+#+BEGIN_SRC prolog :exports code
+
+trajector(Id). % Trajector with id Id
+landmark(Id).  % Landmark with id Id
+spatial_indicator(Id). % Spatial indicator
+motion_indicator(Id).  % Motion indicator
+
+extent(Id, Extent-Begin). % Text extent Extent that begins at token Begin is assigned to entity Id
+path(Id, Path). % Path Path is assigned to entity with id Id
+
+spatial_relation(SpId). % Spatial relation id 
+trajector(SpId, TrId). % Trajector entity TrId is assigned to spatial relation SpId
+landmark(SpId, LmId). % Same for landmark
+spatial_indicator(SpId, SiId). % Same for spatial indicator
+motion_indicator(SpId, MId). % Same for motion indicator
+
+srtype(StId).
+srtype(SpId, StId). % Assigns a different group of parameters to spatial relation =SpId=.
+gtype(StId, Type). % General type  assigned, can be one of {region, direction, distance}.
+stype(StId, Type). % Specific type assigned. 
+
+value(StId, Value),
+
+frame_of_reference(SpId, Type).
+
+#+END_SRC
+
+The mentioned entity predicates are:
+ - =trajector(Id)=: Specifies a trajector with id Id.
+ - =landmark(Id)=: Specifies a landmark with id Id.
+ - =spatial_indicator(Id)=: Specifies a spatial indicator with id Id.
+ - =motion_indicator(id)=: Specifies a motion indicator with id Id. 
+ - =extent(Id, Extent-Begin)=: Assigns the token sequence Extent that starts at token Begin to the entity with id =id=.
+ - =path(Id, Path)=: Assigns a path part to a landmark, assigns the landmark to a park. =Path= can be one of:
+  - =begin=: The beginning of the path.
+  - =middle=: The middle of the path. 
+  - =end=: The endpoint of the path.
+ - =spatial_relation(Id)=: Specifies a spatial relation with id =Id=.
+ 
+The spatial relation definitions and attributes are:
+ - =spatial_relation(SpId)=: Specifies a spatial relation with id =SpId=.
+ - =trajector(SpId, TrId)=: Assigns trajector with id =TrId= to spatial relation with id =SpId=.
+ - =landmark(SpId, LmId)=: Assigns trajector with id =LmId= to spatial relation with id =SpId=.
+ - =spatial_indicator(SpId, SiId)=: Assigns spatial indicator with id =SiId= to spatial relation with id =SpId=.
+ - =motion_indicator(SpId, MId)=: Assigns a motion indicator with id =MId= to spatial relation with id =SpId=.
+ - =srtype(SpId, StId)=: Assign a group of types (like =gtype=, =stype= and =value= to spatial relation id =SpId=.
+ - =gtype(SpId, Type)=: Assigns a general type =Type= to spatial relation type group with id =SpId=. =Type= can be one of:
+   - =region=
+   - =direction=
+   - =distance=
+ - =stype(SpId, Type)=: Assigns a specific type =Type= to spatial relation (or type group) with id =SpId=. If =gtype(SpId, region)= is true then =Type= 
+ must be =rcc8= and =value= one of spatial formalisms like RCC8+ (Table [[tab:rcc8]]). If =gtype(SpId, direction)= then =Type= is one of:
+   =absolute=
+   =relative=
+ otherwise if =gtype(SpId, distance)=, =Type= must be one of:
+   =quantitative=
+   =qualitative=
+ - =frame_of_reference(SpId, Type)=: Spatial relation with id =SpId= is assigned a frame of reference type =Type= with =Type= being one of:
+  -=intrinsic=
+  -=relative=
+  -=absolute=
+
+
+* Annotation approach
+  
+A number of questions to ask for annotating in order to reduce ambiguity is seen below:
+
+1. Is there any direct (without commonsense implications) spatial description in the sentence?
+2. Which words are the indicators (trigger or signal) of the spatial information?
+3. Which words are the arguments of those spatial indicators?
+ - See the following detailed questions
+4. Which tokens have the role of trajector for the spatial indicator and /what/ is the spatial entity described (e.g. object, person)?
+5. Which tokens have the role of landmark for the spatial indicator?
+ - How is the trajector location described and is there any landmark?
+6. Link the above three spatial concepts 
+7. If the trajector/landmark are conjuctive phrases:
+  1. Annotate all the components separately
+  2. Generate all possible spatial relations
+8. If you cannot complete the spatial relation (implicit roles exist in the sentence), annotate the missing roles as null/undefined role.
+ - Finding the spatial indicator is *always* required. 
+9. Is there a complex landmark?
+ - If so, describe it in terms of a point in a path.
+ - =beginning=, =middle=, =end=.
+10. Is there any motion with spatial effects?
+ - If so, figure out the /tokens that trigger it/ and the /motion indicator/
+11. What is the frame of reference?
+ - Maximum one frame for each location
+12. Given a predefined set of formal spatial relations, imagine the trajector and landmark as two regions:
+ - Which formal relation describes the spatial semantics the best?
+13. Does the  spatial relation imply directional semantics?
+14. Does the spatial relation imply regional semantics?
+15. Does the spatial relation provide any information about the distance?
+16. Is one formal semantic type enough for a rough visualization/schematization of the meaning of the spatial relation and locating the objects in the space?
+17. Do we need multiple annotations to capture the semantics of the relation and to be able to draw a rough sketch? Annotate with as many as possible semantics that are covered by the relation. 
+18. When annotating multiple semantics, choose *only one* fine-grained type for each general category of {=direction=, =region=, =distance=}.
+
+Answers to questions 12-18 require the selection of a formal spatial representation which can involve multiple
+choices. 
+
+
+To aid dealing with ambiguities, the spatial descriptions are categorized into /simple/ and /complex/ descriptions:
+ - /simple descriptions/ are spatial descriptions which include one target, at most one landmark and at most one spatial indicator.
+ - /complex locative statements/ are locative phrases with more than one landmark.
+ - /path and route descriptions/ There is focus shift, for example the speaker explains some target referring to some landmarks but at another point explains another object or landmark e.g. when the focus shifts to another entity as trajector.
+ - /sequential scene descriptions/ Those are linked descriptive phrases. After each description usually an object focus shift happens.
+
+
+** Reference Resolution
+
+In the case there are references instead of real trajectors or landmarks the resolution of references should be done as a post- or pre- processings step. For example, /there/ in the following
+example is still a valid landmark. 
+
+#+BEGIN_VERSE
+The baloon went over [there]_{lm}
+#+END_VERSE
+
+** Landmarks and Paths
+In the case we need to annotate landmarks, there are cases where we are describing a motion. In that case the landmark must indicate which part of the path it refers to.
+For example:
+
+#+BEGIN_VERSE
+John went out of [the room]_{lm}
+#+END_VERSE
+
+In this case, we should annotate [the room]_{lm} as:
+
+#+BEGIN_SRC prolog :exports code
+landmark(lm1).
+extent(lm1, "the room"-8).
+path(lm1, beginning).
+#+END_SRC
+
+Notice the =beginning= path. This indicates that John was initially in the room.
+
+** Spatial Indicators
+
+Spatial indicators are mostly /prepositions/ but can also be /verbs/, /nouns/ and /adverbs/ as well as /a combination of them/. For example the spatial indicator in:
+
+
+#+BEGIN_VERSE
+He is [in front of]_{s1} the bush
+#+END_VERSE
+
+will be annotated as:
+
+#+BEGIN_SRC prolog :exports code
+spatial_indicator(s1).
+extent(s1, "in front of"-3).
+#+END_SRC
+
+
+** Motion indicators
+
+Motion indicators are mostly /propositional verbs/ but can also be /adverbs/, etc. An example tagging would be:
+
+#+BEGIN_VERSE
+The bird [flew to]_{m1} its nest.
+#+END_VERSE
+
+
+#+BEGIN_SRC prolog :exports code
+motion_indicator(m1).
+extent(m1, "flew to"-3).
+#+END_SRC
+
+
+
+
+* Examples
+
+** Simple Descriptions
+
+#+BEGIN_VERSE
+She is at school.
+#+END_VERSE
+
+
+#+BEGIN_SRC prolog :exports code
+trajector(tr1).
+extent(tr1, "She"-1).
+landmark(lm1).
+extent(lm1, school-4).
+spatial_indicator(s1).
+extent(s1, at-3).
+spatial_relation(sr1).
+trajector(sr1, tr1).
+landmark(sr1, lm1).
+spatial_indicator(sr1, s1).
+gtype(sr1, region).
+stype(sr1, rcc8).
+value(sr1, tpp).
+frame_of_reference(sr1, intrinsic).
+#+END_SRC
+
+
+#+BEGIN_VERSE
+She went to school.
+#+END_VERSE
+
+
+#+BEGIN_SRC prolog :exports code
+trajector(tr1).
+extent(tr1, "She"-1).
+landmark(lm1).
+path(lm1, end).
+extent(lm1, school-4).
+spatial_indicator(s1).
+extent(s1, to-3).
+motion_indicator(m1).
+extent(m1, "went to"-2).
+
+spatial_relation(sr1).
+trajector(sr1, tr1).
+landmark(sr1, lm1).
+spatial_indicator(sr1, s1).
+motion_indicator(sr1, m1).
+gtype(sr1, region).
+stype(sr1, rcc8).
+value(sr1, tpp).
+frame_of_reference(sr1, intrinsic).
+#+END_SRC
+
+
+
+#+BEGIN_VERSE
+The book is on the table.
+#+END_VERSE
+
+
+#+BEGIN_SRC prolog :exports code
+trajector(tr1).
+extent(tr1, "The book"-1).
+
+landmark(lm1).
+extent(lm1, "the table"-5).
+
+spatial_indicator(s1).
+extent(s1, on-4).
+
+spatial_relation(sr1).
+trajector(sr1, tr1).
+landmark(sr1, lm1).
+spatial_indicator(sr1, s1).
+
+gtype(sr1, region).
+stype(sr1, rcc8).
+value(sr1, on).
+frame_of_reference(sr1, intrinsic).
+#+END_SRC
+
+
+#+BEGIN_VERSE
+She is playing in the room.
+#+END_VERSE
+
+
+#+BEGIN_SRC prolog :exports code
+trajector(tr1).
+extent(tr1, "She"-1).
+
+landmark(lm1).
+extent(lm1, "the room"-5).
+
+spatial_indicator(s1).
+extent(s1, on-4).
+
+spatial_relation(sr1).
+trajector(sr1, tr1).
+landmark(sr1, lm1).
+spatial_indicator(sr1, s1).
+
+gtype(sr1, region).
+stype(sr1, rcc8).
+value(sr1, on).
+frame_of_reference(sr1, intrinsic).
+#+END_SRC
+
+
+
+
+
+** Complex Descriptions
+
+*** Complex locative statements
+
+#+BEGIN_VERSE
+The vase is in the living room, on the table under the window.
+#+END_VERSE
+
+
+#+BEGIN_SRC prolog :exports code
+trajector(tr1).
+extent(tr1, "The vase"-1).
+landmark(lm1).
+extent(lm1, "the living room").
+landmark(lm2).
+extent(lm2, "the table").
+landmark(lm3).
+extent(lm3, "the window").
+spatial_indicator(s1).
+extent(s1, in-4).
+spatial_indicator(s2).
+extent(s2, on).
+spatial_indicator(s3).
+extent(s3, under).
+
+spatial_relation(sr1).
+trajector(sr1, tr1).
+landmark(sr1, lm1).
+spatial_indicator(sr1, s1).
+gtype(sr1, region).
+stype(sr1, rcc8).
+value(sr1, ntpp).
+frame_of_reference(sr1, intrinsic).
+
+spatial_relation(sr2).
+trajector(sr1, tr1).
+landmark(sr1, lm2).
+spatial_indicator(sr1, s2).
+gtype(sr1, region).
+stype(sr1, rcc8).
+value(sr1, ec).
+frame_of_reference(sr1, intrinsic).
+
+spatial_relation(sr3).
+trajector(sr3, tr1).
+landmark(sr3, lm3).
+spatial_indicator(sr3, s3).
+gtype(sr1, direction).
+stype(sr1, relative).
+value(sr1, below).
+frame_of_reference(intrinsic).
+
+#+END_SRC
+
+
+*** Path and route descriptions
+#+BEGIN_VERSE
+The man came from between the shops, ran along the road and disappeared down the alley by the church.
+#+END_VERSE
+
+Here the motion indicators are omitted. 
+
+#+BEGIN_SRC prolog :exports code
+
+trajector(tr1).
+extent(tr1, "the man").
+
+landmark(lm1).
+extent(lm1, "the shops").
+path(lm1, beginning).
+
+landmark(lm2).
+extent(lm2, "the alley").
+path(lm2, end).
+
+trajector(tr2).
+extent(tr2, "the alley").
+
+landmark(lm3).
+extent(lm3, "the church").
+
+spatial_indicator(s1).
+extent(s1, "between").
+
+spatial_indicator(s2).
+extent(s2, "along").
+
+spatial_indicator(s3).
+extent(s3, "down").
+
+spatial_indicator(s4).
+extent(s4, "by").
+
+spatial_relation(sr1).
+trajector(sr1, tr1).
+landmark(sr1, lm1).
+
+
+
+#+END_SRC
+
+*** Sequential scene descriptions
+
+#+BEGIN_VERSE
+Behind the shops is a church, to the left of the church is the town hall, in front of the town hall is a fountain.
+#+END_VERSE
+
+Here the motion indicators are omitted. 
+
+#+BEGIN_SRC prolog :exports code
+trajector(tr1).
+extent(tr1, church).
+landmark(lm1).
+extent(lm1, shops).
+spatial_indicator(s1).
+extent(s1, behind).
+trajector(tr2).
+extent(tr2, "town hall").
+landmark(lm2).
+extent(lm2, church).
+spatial_indicator(s2).
+extent(s2, "to the left of").
+trajector(tr3).
+extent(tr3, fountain).
+landmark(lm3).
+extent(lm3, "town hall").
+spatial_indicator(s3).
+extent(s3, "in front of").
+spatial_relation(sr1).
+trajector(sr1, tr1).
+landmark(sr1, lm1).
+
+spatial_indicator(sr1, s1).
+frame_of_reference(sr1, intrinsic).
+gtype(sr1, direction).
+stype(sr1, relative).
+value(sr1, behind).
+
+spatial_relation(sr2).
+trajector(sr2, tr2).
+landmark(sr2, lm2).
+spatial_indicator(sr2, s2).
+frame_of_reference(sr2, intrinsic).
+gtype(sr2, direction).
+stype(sr2, relative).
+value(sr2, left).
+
+spatial_relation(sr3).
+trajector(sr3, tr3).
+landmark(sr3, lm3).
+spatial_indicator(sr3, s3).
+frame_of_reference(sr3, relative).
+gtype(sr3, direction).
+stype(sr3, relative).
+value(sr3, front).
+
+
+#+END_SRC
+
+*** Spatial role labelling with /for/
+
+The following example uses the /for/ indicator to say that john was in Boston and went to New York.
+
+#+BEGIN_VERSE
+John left Boston for New York
+#+END_VERSE
+
+#+BEGIN_SRC prolog :exports code
+trajector(tr1).
+extent(tr1, "John").
+landmark(lm1).
+extent(lm1, "Boston").
+path(lm1, begin).
+landmark(lm2).
+extent(lm2, "New York").
+path(lm2, end).
+spatial_indicator(s1).
+extent(s1, 'for').
+motion_indicator(m1).
+extent(m1, 'left').
+
+spatial_relation(sr1).
+trajector(sr1, tr1).
+landmark(sr1, lm1).
+motion_indicator(sr1, m1).
+gtype(sr1, direction).
+stype(sr1, relative).
+value(sr1, ntpp).
+frame_of_reference(ssr1, absolute).
+
+spatial_relation(sr2).
+trajector(sr2, tr1).
+landmark(sr2, lm2).
+spatial_indicator(sr2, s1).
+motion_indicator(sr2, m1).
+gtype(sr2, direction).
+stype(sr2, relative).
+value(sr2, ntpp).
+frame_of_reference(sr2, absolute).
+
+#+END_SRC
+
+
+* RCC8^+ Relations
+An important reference is the RCC8^+ relations which are used throughout several ISO-space predicates and can be seen in Table [[tab:rcc8]] and a visual explanation in Figure [[img:rcc8]]. The value =in= should be used when its not clear whether =tpp= or =ntpp= is the correct type.
+
+#+CAPTION: The RCC8 relations
+#+NAME: tab:rcc8
+| Relation | Description                     |
+|----------+---------------------------------|
+| =dc=     | Disconnected                    |
+| =ec=     | External connection             |
+| =po=     | Partial overlap                 |
+| =eq=     | Equal                           |
+| =tpp=    | Tangential proper part          |
+| =itpp=   | Inverse of tpp                  |
+| =ntpp=   | Non-tangential proper part      |
+| =intpp=  | nverse of ntpp                  |
+| =in=     | The disjunction of tpp and ntpp |
+
+#+CAPTION: An interpretation of RCC8^+ relations
+#+NAME: img:rcc8
+[[./RCC8.jpg]]
+
+
+
+
+
+
+
+* References
+
+bibliography:bibliography.bib
