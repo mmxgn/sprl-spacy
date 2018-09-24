@@ -25,7 +25,7 @@ sprl_process_sentence(X) :- % Get spatial entity types
 			    % Add trajector
 			    new_label(tr, TrId),
 			    assertz(trajector(TrId)),
-			    assertz(extend(TrId, Tr)),
+			    assertz(extent(TrId, Tr)),
 			    assertz(trajector(SRId, TrId)),
 			    closest_type(Tr, Types, TrType),
 			    assertz(type(TrId, TrType)),
@@ -33,7 +33,7 @@ sprl_process_sentence(X) :- % Get spatial entity types
 			    % Add landmark
 			    new_label(lm, LmId),
 			    assertz(landmark(LmId)),
-			    assertz(extend(LmId, Lm)),
+			    assertz(extent(LmId, Lm)),
 			    assertz(landmark(SRId, LmId)),
 			    closest_type(Lm, Types, LmType),
 			    assertz(type(LmId, LmType)),
@@ -41,5 +41,5 @@ sprl_process_sentence(X) :- % Get spatial entity types
 			    % Add spatial indicator
 			    new_label(sp, SpId),
 			    assertz(spatial_indicator(SpId)),
-			    assertz(extend(SpId, Sp)),
+			    assertz(extent(SpId, Sp)),
 			    assertz(spatial_indicator(SRId, SpId)).
