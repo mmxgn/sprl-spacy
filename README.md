@@ -37,6 +37,14 @@ If everything went fine you should get something like:
 ```
 [(An angry big dog, behind, us, 'direction')]
 ```
+
+You can also run `sprl_cmd.py` to get a continuous input to test how well various
+sentences are processed:
+
+```
+$ python3 sprl_cmd.py
+```
+
 ## Problog
 
 <!-- If you happen to have problog installed, you can see `example.pl` on how to use it from -->
