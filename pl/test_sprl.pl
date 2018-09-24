@@ -6,7 +6,7 @@ query(trajector(X)).
 query(landmark(X)).
 query(spatial_indicator(X)).
 query(type(X,Y)).
-query(extend(X, Extend)).
+query(extent(X, Extend)).
 query(spatial_relation(X)).
 query(gtype(X,Y)).
 query(srtype(X, Y)).
