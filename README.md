@@ -57,7 +57,7 @@ query(trajector(X)).
 query(landmark(X)).
 query(spatial_indicator(X)).
 query(type(X,Y)).
-query(extend(X, Extend)).
+query(extent(X, Extent)).
 query(spatial_relation(X)).
 query(gtype(X,Y)).
 query(srtype(X, Y)).
@@ -74,9 +74,9 @@ $ PYTHONPATH="../sprl" problog test_sprl.pl
 and get the following output:
 
 ```
-              extend(lm0,us):	1
-          extend(sp0,behind):	1
-extend(tr0,An angry big dog):	1
+              extent(lm0,us):	1
+          extent(sp0,behind):	1
+extent(tr0,An angry big dog):	1
         gtype(st0,direction):	1
                landmark(lm0):	1
                      run_all:	1
