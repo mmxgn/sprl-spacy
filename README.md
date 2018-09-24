@@ -23,11 +23,13 @@ on the SpRL 2013 IAPR TC-12 dataset.
 import spacy
 from sprl import *
 
-nlp = spacy.load('en_core_web_lg-sprl')
+nlp = spacy.load('models/en_core_web_lg-sprl')
 
 sentence = "An angry big dog is behind us."
 
-rel = sprl(sentence, nlp)
+rel = sprl(sentence, nlp, model_relext_filename='models/model_svm_relations.pkl')
+
+print(rel)
 ```
 
 If everything went fine you should get something like:
@@ -35,13 +37,59 @@ If everything went fine you should get something like:
 ```
 [(An angry big dog, behind, us, 'direction')]
 ```
+## Problog
 
-If you happen to have problog installed, you can see `example.pl` on how to use it from
-within problog. **Note:** If you want to use it from within problog you need to append the `sprl` directory to `PYTHONPATH`, e.g:
+<!-- If you happen to have problog installed, you can see `example.pl` on how to use it from -->
+<!-- within problog. **Note:** If you want to use it from within problog you need to append the `sprl` directory to `PYTHONPATH`, e.g: -->
+
+<!-- ``` -->
+<!-- $ PYTHONPATH="../sprl" problog example.pl -->
+<!-- ``` -->
+
+If you happen to have problog installed, I have made a library that allows you to process sentences and produce a set of first order predicates that express the spatial relations within it. For example you can do something like in `pl/test_sprl.pl`:
 
 ```
-$ PYTHONPATH=sprl problog example.pl
+:-use_module('sprl.pl').
+
+run_all :- sprl_process_sentence('An angry big dog is behind us.').
+query(run_all).
+query(trajector(X)).
+query(landmark(X)).
+query(spatial_indicator(X)).
+query(type(X,Y)).
+query(extend(X, Extend)).
+query(spatial_relation(X)).
+query(gtype(X,Y)).
+query(srtype(X, Y)).
+query(srtype(X)).
+
 ```
+
+which you can run with:
+
+```
+$ PYTHONPATH="../sprl" problog test_sprl.pl
+```
+
+and get the following output:
+
+```
+              extend(lm0,us):	1
+          extend(sp0,behind):	1
+extend(tr0,An angry big dog):	1
+        gtype(st0,direction):	1
+               landmark(lm0):	1
+                     run_all:	1
+      spatial_indicator(sp0):	1
+       spatial_relation(sr0):	1
+             srtype(sr0,st0):	1
+                 srtype(st0):	1
+              trajector(tr0):	1
+            type(lm0,person):	1
+            type(tr0,animal):	1
+```
+
+We can see for example that it identified and labeled the trajector, landmark and spatial indicator in the sentence, assigned them an id, identified the spatial relation and assigned it a general type of *direction*. It also assigned a type of *person* to the landmark *us* and *animal* to the trajector *An angry big dog*. For what those predicates mean and how they are used please see `doc/sprl.html`.
 
 ## Credits
 
