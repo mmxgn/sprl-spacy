@@ -1,7 +1,6 @@
 :-use_module(library(assert)).
 :-use_module('sprl_pl.py').
 :-use_module('util_pl.py').
-:-use_module('nlp_pl.py').
 
 % Types we cluster objects to.
 sp_types(['animal', 'person', 'building', 'nature',  'vehicle', 'insect', 'area']).
