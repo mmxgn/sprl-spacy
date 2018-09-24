@@ -68,7 +68,7 @@ sprl_process_sentence(Tag, X) :- % Same as above, but assign also tag:Tag to eac
 			    assertz(trajector(SRId, TrId)),
 			    closest_type(Tr, Types, TrType),
 			    assertz(type(TrId, TrType)),
-			    assertz(tag(TrId, Label)),
+			    assertz(tag(TrId, Tag)),
 			    
 			    % Add landmark
 			    new_label(lm, LmId),
