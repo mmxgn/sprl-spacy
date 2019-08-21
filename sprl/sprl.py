@@ -8,8 +8,8 @@ Created on Mon Sep  3 17:14:47 2018
 Functions that do spatial role labeling. Relation extraction is done
 using sklearn with features extracted from the sentence based on the following paper:
 cd
-Nichols, Eric, and Fadi Botros. 
-"SpRL-CWW: Spatial relation classification with independent multi-class models." 
+Nichols, Eric, and Fadi Botros.
+"SpRL-CWW: Spatial relation classification with independent multi-class models."
 Proceedings of the 9th International Workshop on Semantic Evaluation (SemEval 2015)
 """
 
@@ -19,10 +19,10 @@ import spacy
 
 def get_dep_path(span1, span2):
     assert span1.sent == span2.sent, "sent1: {}, span1: {}, sent2: {}, span2: {}".format(span1.sent, span1, span2.sent, span2)
-    
+
     up = []
-    down = [] 
-    
+    down = []
+
     head = span1[0]
     while head.dep_ != 'ROOT':
         up.append(head)
@@ -35,7 +35,7 @@ def get_dep_path(span1, span2):
         head = head.head
     down.append(head)
     down.reverse()
-    
+
     for n1, t1 in enumerate(up):
         for n2, t2 in enumerate(down):
             if t1 == t2:
@@ -70,7 +70,7 @@ def extract_relation_features(relation):
                 F['A{}F12'.format(a)] = 'LEFT'
                 F['A{}F22'.format(a)] = trigger[0].i - arg[-1].i
             elif arg[0].i > trigger[-1].i:
-                F['A{}F12'.format(a)] = 'RIGHT'  
+                F['A{}F12'.format(a)] = 'RIGHT'
                 F['A{}F22'.format(a)] = arg[0].i - trigger[-1].i
 
 
@@ -97,7 +97,7 @@ def extract_relation_features(relation):
     if 'A0F22' in F and 'A1F22' in F:
         F['F23'] = F['A0F22'] + F['A1F22']
 
-    return F        
+    return F
 
 def extract_candidate_relations_from_sents(sents, gold_relations):
     candidate_relations = []
@@ -125,7 +125,7 @@ def extract_candidate_relations_from_sents(sents, gold_relations):
                             pass
     return candidate_relations, candidate_labels
 
-def sprl(sentence, 
+def sprl(sentence,
          nlp,
          model_relext_filename='model_svm_relations.pkl'):
     output = []
@@ -139,9 +139,9 @@ def sprl(sentence,
         general_type = clf.predict(feat_vec)[0]
         if general_type != 'NONE':
             output.append((relation[0], relation[1], relation[2], general_type))
-        
+
     return output
-        
+
 
 def sprl_str(sentence,
              nlp,
@@ -158,5 +158,5 @@ def sprl_str(sentence,
         general_type = clf.predict(feat_vec)[0]
         if general_type != 'NONE':
             output.append((str(relation[0]), str(relation[1]), str(relation[2]), general_type))
-        
-    return output    
+
+    return output

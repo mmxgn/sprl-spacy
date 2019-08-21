@@ -7,10 +7,10 @@ sp_types(['animal', 'person', 'building', 'nature',  'vehicle', 'insect', 'area'
 
 sprl_process_sentence(X) :- % Get spatial entity types
                             sp_types(Types),
-    
+
 			    % Resolve sentence to relation
                             sprl(X, Tr, Sp, Lm, Type),
-			    
+
 			    % Create spatial relation
 			    new_label(sr, SRId),
 			    assertz(spatial_relation(SRId)),
@@ -20,7 +20,7 @@ sprl_process_sentence(X) :- % Get spatial entity types
 			    assertz(srtype(STId)),
 			    assertz(srtype(SRId, STId)),
 			    assertz(gtype(STId, Type)),
-			    
+
 
 			    % Add trajector
 			    new_label(tr, TrId),
@@ -29,7 +29,7 @@ sprl_process_sentence(X) :- % Get spatial entity types
 			    assertz(trajector(SRId, TrId)),
 			    closest_type(Tr, Types, TrType),
 			    assertz(type(TrId, TrType)),
-			    
+
 			    % Add landmark
 			    new_label(lm, LmId),
 			    assertz(landmark(LmId)),
@@ -47,10 +47,10 @@ sprl_process_sentence(X) :- % Get spatial entity types
 sprl_process_sentence(Tag, X) :- % Same as above, but assign also tag:Tag to each spatial entity
                             % Get spatial entity types
                             sp_types(Types),
-    
+
 			    % Resolve sentence to relation
                             sprl(X, Tr, Sp, Lm, Type),
-			    
+
 			    % Create spatial relation
 			    new_label(sr, SRId),
 			    assertz(spatial_relation(SRId)),
@@ -60,7 +60,7 @@ sprl_process_sentence(Tag, X) :- % Same as above, but assign also tag:Tag to eac
 			    assertz(srtype(STId)),
 			    assertz(srtype(SRId, STId)),
 			    assertz(gtype(STId, Type)),
-			    
+
 			    % Add trajector
 			    new_label(tr, TrId),
 			    assertz(trajector(TrId)),
@@ -69,7 +69,7 @@ sprl_process_sentence(Tag, X) :- % Same as above, but assign also tag:Tag to eac
 			    closest_type(Tr, Types, TrType),
 			    assertz(type(TrId, TrType)),
 			    assertz(tag(TrId, Tag)),
-			    
+
 			    % Add landmark
 			    new_label(lm, LmId),
 			    assertz(landmark(LmId)),
