@@ -6,7 +6,7 @@ on the SpRL 2013 IAPR TC-12 dataset.
 
 ## Requirements
 
-- `spacy >=2.0.0a18` and the necessary requirements
+- `spacy >=2.0.0a18` and the necessary requirements (Does *NOT* work with Spacy versions `2.1.x` and above)
 - `sklearn`
 - `scipy`
 - `pickle` for python 3.7.0
